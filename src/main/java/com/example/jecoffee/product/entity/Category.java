@@ -1,6 +1,10 @@
 package com.example.jecoffee.product.entity;
 
+import com.example.jecoffee.product.exception.ProductException;
+import com.example.jecoffee.product.exception.ProductExceptionCode;
 import com.example.jecoffee.order.repository.OrderJdbcRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public enum Category {
     COFFEE("커피"),
@@ -12,6 +16,7 @@ public enum Category {
 
     private String name;
 
+    private static final Logger logger = LoggerFactory.getLogger(OrderJdbcRepository.class);
 
     Category(String name) {
         this.name = name;
@@ -28,5 +33,7 @@ public enum Category {
             }
         }
 
+        logger.error(ProductExceptionCode.INVALID_PRODUCT_CATEGORY.getMessage());
+        throw new ProductException(ProductExceptionCode.INVALID_PRODUCT_CATEGORY);
     }
 }
